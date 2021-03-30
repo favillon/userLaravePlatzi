@@ -34,4 +34,9 @@ Tablas en laravel
 > Modelos en singular tablas en plural.
 
 Model User, method posts hasMany Post::class
+
 Model Post, method user  belongsTo User::class
+
+| Captura pantalla |
+| :---------------:|
+|![User](./public/img/user.png)|
