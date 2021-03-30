@@ -14,6 +14,37 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8 mx-auto">
+                <div class="card border-0 shadow">
+                    <div class="card-body">
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('users.store')}}" method="POST">
+                            @csrf
+                            <div class="form-row">
+                                <div class="col-sm-3">
+                                    <input type="text" name="name" class="form-control" value="{{old('name')}}" placeholder="Nombre">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" name="email" class="form-control" value="{{old('email')}}" placeholder="Email">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="password"name="password" class="form-control" value="{{old('password')}}" placeholder="Password">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-primary"> Crear Usuario</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -30,7 +61,16 @@
                                 <td>{{ $user->id}}</td>
                                 <td>{{ $user->name}}</td>
                                 <td>{{ $user->email}}</td>
-                                <td><button></button></td>
+                                <td>
+                                    <form action="{{ route('users.destroy', $user)}}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                        <input 
+                                            type="submit" value="Eliminar" class="btn btn-danger"
+                                            onclick="return confirm('Deseo Eliminar el usuario')"
+                                        >
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

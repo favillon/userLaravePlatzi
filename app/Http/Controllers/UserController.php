@@ -30,10 +30,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'     => 'required',
+            'email'     => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'min:8'],
+        ]);
+
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->name,
+            'password' => bcrypt($request->password),
         ]);
         return back();
     }
@@ -55,9 +61,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $id)
+    public function destroy(User $user)
     {
-        $users->delete();
+        $user->delete();
         return back();
     }
 }
